@@ -8,7 +8,7 @@
 
 ### 举个例子
 
-现在有需求让你修改一个类似于微博个人中心的界面,这种节目几乎所有内容都是写死的界面,当然我估计微博的个人中心是完全动态的,这里先假设是写死的,况且模块化也适用于动态界面
+现在有需求让你修改一个类似于微博个人中心的界面,这种界面几乎所有内容都是写死的界面,虽然我估计微博的个人中心是完全动态的,但这里先假设是写死的,况且模块化也适用于动态界面
 
 
 
@@ -110,7 +110,7 @@ self.navigationController?.pushViewController(pushedCtr, animated: true)
 
 
 
-#### 这里可以做的优化不是一般的多
+#### 仔细一看,这里可以做的优化不是一般的多
 
 首先cellForRow中,设置cell的工作可以交给各自的cell处理,在获取cell后只要对cell设置model就行了
 
@@ -144,7 +144,7 @@ var backgroundImage:UIImage?
 
 > 偏题一下,由于ObjC类的底层实现,编译后的二进制包会保存所有类各自的信息,不像C++具有zero-cost abstraction ,编译后的类信息只有偏移量.所以创建的ObjC类越多,二进制包就会越大,虽然增加的大小一般可以忽略不计,但前期稍微注意一下可以推迟后期可能会遇到下载包达到150M的问题
 
-既然把model合并了,可以为不同的类型编写不同的初始化方法区分开,后期需要添加新的Cell值需要一行代码就知道设置什么参数
+既然把model合并了,可以为不同类型的Cell编写不同的初始化方法区分类型,后期需要添加新的Cell值需要一行代码就知道设置什么参数,为了区分,修改后成为node
 
 ```
 struct TableNode {
@@ -178,7 +178,7 @@ self.type = 3
 }
 ```
 
-规范化可以给Cell创建协议,协议中就只有一行属性model
+规范化可以给Cell创建协议,协议中只有一行属性model
 
 ```
 protocol TableNodeProtocol {
@@ -187,9 +187,13 @@ var node:TableNode?{get set}
 
 }
 
+let node = nodeList[indexPath.section][indexPath.row]
+var cell = tableView.dequeueReusableCell(withIdentifier: "\(node.type)") as? (UITableViewCell & TableNodeProtocol)
+cell?.node = node
+
 ```
 
-可以把cell的点击事件也放到model中,到时候didSelectRow就能把操作和indexPath的绑定转型成操作和model绑定,后期怎么改都不需要在意这里
+可以把cell的点击事件也放到node中,到时候didSelectRow就能把操作和indexPath的绑定转型成操作和model绑定,后期怎么改都不需要在意这里
 
 ```
 struct TableNode {
@@ -252,9 +256,14 @@ self.selectCell = selectCell
 
 }
 }
+
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+table.deselectRow(at: indexPath, animated: true)
+nodeList[indexPath.section][indexPath.row].selectCell?()
+}
 ```
 
-添加的时候:
+做完上面几步,你会发现今天的主题已经实现了,现在已经把tableView内容模块化了,不管是改动顺序也好,改动cell内容也好,改动点击cell的操作也好,都能在一个地方处理,不需要根据indexPath调整内容(或者创建一堆的枚举用于区分) ,添加内容时只需:
 
 ```
 subList.append(TableNode(regularWithIcon: #imageLiteral(resourceName: "news"), title: "2018新闻", description: "点击查看更多"){ [weak self] in
@@ -264,6 +273,10 @@ self?.navigationController?.pushViewController(pushedCtr, animated: true)
 })
 ```
 
-做完上面几步,你会发现今天的主题已经实现了,现在已经把tableView内容模块化了,改动顺序也好,改动cell内容也好,改动点击cell的操作也好,都能在一个地方处理,不需要根据indexPath调整内容
+除了添加新的Cell类型,后续匹配工作都可以忽略不管
 
 
+
+完整实现的例子可以在github上查看:
+
+https://github.com/miku1958/ModularTable
