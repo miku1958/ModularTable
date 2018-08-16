@@ -25,34 +25,34 @@
 ```
 struct TableModel_1 {
 
-var icon:UIImage?
+  var icon:UIImage?
 
-var title:String = ""
+  var title:String = ""
 
-var desc:String = ""
+  var desc:String = ""
 
 }
 
 struct TableModel_2 {
 
-var min:Double = 0
-var max:Double = 0
-var current:Double = 0
+  var min:Double = 0
+  var max:Double = 0
+  var current:Double = 0
 
 }
 struct TableModel_3 {
 
-var desc:String = ""
+  var desc:String = ""
 
 }
 
 struct TableModel_4 {
 
-var icon:UIImage?
+  var icon:UIImage?
 
-var title:String = ""
+  var title:String = ""
 
-var backgroundImage:UIImage?
+  var backgroundImage:UIImage?
 
 }
 ```
@@ -61,23 +61,23 @@ var backgroundImage:UIImage?
 
 ```
 if let cell = cell as? RegularCell{
-cell.titleLabel.text = node.title
-cell.descriptionLabel.text = node.desc
-cell.iconImageView.image = node.icon
+  cell.titleLabel.text = node.title
+  cell.descriptionLabel.text = node.desc
+  cell.iconImageView.image = node.icon
 }
 if let cell = cell as? RangeCell{
-cell.titleLabel.text = node.title
-cell.maxLabel.text = "\(node.max)"
-cell.minLabel.text = "\(node.min)"
-cell.sliderView.value = Float(node.current)
+  cell.titleLabel.text = node.title
+  cell.maxLabel.text = "\(node.max)"
+  cell.minLabel.text = "\(node.min)"
+  cell.sliderView.value = Float(node.current)
 }
 if let cell = cell as? DescriptionCell{
-cell.descriptionLabel.text = node.desc
+  cell.descriptionLabel.text = node.desc
 }
 if let cell = cell as? BlurCell{
-cell.titleLabel.text = node.title
-cell.iconImageView.image = node.icon
-cell.backgroundImageVIew.image = node.backgroundImage
+  cell.titleLabel.text = node.title
+  cell.iconImageView.image = node.icon
+  cell.backgroundImageVIew.image = node.backgroundImage
 }
 ```
 
@@ -88,17 +88,17 @@ let pushedCtr = PushedCtr()
 
 switch indexPath.section {
 case 0:
-switch indexPath.row {
-case 0: pushedCtr.title = "2018新闻"
-case 1: pushedCtr.title = "今日温度"
-default: break
+  switch indexPath.row {
+  case 0: pushedCtr.title = "2018新闻"
+  case 1: pushedCtr.title = "今日温度"
+  default: break
 }
 case 1:
-switch indexPath.row {
-case 0: pushedCtr.title = "广告位招租"
-case 1: pushedCtr.title = "今日湿度"
-case 2: pushedCtr.title = "谷歌回归"
-default: break
+  switch indexPath.row {
+  case 0: pushedCtr.title = "广告位招租"
+  case 1: pushedCtr.title = "今日湿度"
+  case 2: pushedCtr.title = "谷歌回归"
+  default: break
 }
 default:break
 }
@@ -124,27 +124,27 @@ self.navigationController?.pushViewController(pushedCtr, animated: true)
 
 ```
 struct TableNode {
-var type:Int
+  var type:Int
 
-//type == 0
-var icon:UIImage?
-var title:String = ""
-var desc:String = ""
+  //type == 0
+  var icon:UIImage?
+  var title:String = ""
+  var desc:String = ""
 
-//type == 1
-var min:Double = 0
-var max:Double = 0
-var current:Double = 0
-//title
+  //type == 1
+  var min:Double = 0
+  var max:Double = 0
+  var current:Double = 0
+  //title
 
-//type == 2
-//desc
+  //type == 2
+  //desc
 
 
-//type == 3
-//title
-//icon
-var backgroundImage:UIImage?
+  //type == 3
+  //title
+  //icon
+  var backgroundImage:UIImage?
 }
 ```
 
@@ -154,33 +154,33 @@ var backgroundImage:UIImage?
 
 ```
 struct TableNode {
-var type:Int
+  var type:Int
 
-var icon:UIImage?
-var title:String = ""
-var desc:String = ""
-init(regularWithIcon icon:UIImage?, title:String , description:String) {
-self.type = 0
-...
-}
-var min:Double = 0
-var max:Double = 0
-var current:Double = 0
-init(rangeWithTitle title:String , min:Double , max:Double,current:Double) {
-self.type = 1
-...
-}
+  var icon:UIImage?
+  var title:String = ""
+  var desc:String = ""
+  init(regularWithIcon icon:UIImage?, title:String , description:String) {
+    self.type = 0
+    ...
+  }
+  var min:Double = 0
+  var max:Double = 0
+  var current:Double = 0
+  init(rangeWithTitle title:String , min:Double , max:Double,current:Double) {
+    self.type = 1
+    ...
+  }
 
-init(description:String) {
-self.type = 2
-self.desc = description
-}
+  init(description:String) {
+    self.type = 2
+    self.desc = description
+  }
 
-var backgroundImage:UIImage?
-init(webWithTitle title:String , backgroundImage:UIImage , icon:UIImage) {
-self.type = 3
-...
-}
+  var backgroundImage:UIImage?
+    init(webWithTitle title:String , backgroundImage:UIImage , icon:UIImage) {
+    self.type = 3
+    ...
+  }
 }
 ```
 
@@ -189,7 +189,7 @@ self.type = 3
 ```
 protocol TableNodeProtocol {
 
-var node:TableNode?{get set}
+  var node:TableNode?{get set}
 
 }
 
@@ -204,68 +204,68 @@ cell?.node = node
 ```
 struct TableNode {
 
-var type:Int
+  var type:Int
 
-var icon:UIImage?
+  var icon:UIImage?
 
-var title:String = ""
+  var title:String = ""
 
-var desc:String = ""
+  var desc:String = ""
 
-var selectCell:(()->())?
+  var selectCell:(()->())?
 
-init(regularWithIcon icon:UIImage?, title:String , description:String,selectCell:@escaping ()->()) {
+  init(regularWithIcon icon:UIImage?, title:String , description:String,selectCell:@escaping ()->()) {
 
-self.type = 0
+    self.type = 0
 
-...
+    ...
 
-self.selectCell = selectCell
+    self.selectCell = selectCell
 
-}
+  }
 
-var min:Double = 0
+  var min:Double = 0
 
-var max:Double = 0
+  var max:Double = 0
 
-var current:Double = 0
+  var current:Double = 0
 
-init(rangeWithTitle title:String , min:Double , max:Double,current:Double,selectCell:@escaping ()->()) {
+  init(rangeWithTitle title:String , min:Double , max:Double,current:Double,selectCell:@escaping ()->()) {
 
-self.type = 1
+    self.type = 1
 
-...
+    ...
 
-self.selectCell = selectCell
+    self.selectCell = selectCell
 
-}
+  }
 
-init(description:String,selectCell:@escaping ()->()) {
+  init(description:String,selectCell:@escaping ()->()) {
 
-self.type = 2
+    self.type = 2
 
-self.desc = description
+    self.desc = description
 
-self.selectCell = selectCell
+    self.selectCell = selectCell
 
-}
+  }
 
-var backgroundImage:UIImage?
+  var backgroundImage:UIImage?
 
-init(webWithTitle title:String , backgroundImage:UIImage , icon:UIImage,selectCell:@escaping ()->()) {
+  init(webWithTitle title:String , backgroundImage:UIImage , icon:UIImage,selectCell:@escaping ()->()) {
 
-self.type = 3
+    self.type = 3
 
-...
+    ...
 
-self.selectCell = selectCell
+    self.selectCell = selectCell
 
-}
+  }
 }
 
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-table.deselectRow(at: indexPath, animated: true)
-nodeList[indexPath.section][indexPath.row].selectCell?()
+  table.deselectRow(at: indexPath, animated: true)
+  nodeList[indexPath.section][indexPath.row].selectCell?()
 }
 ```
 
@@ -273,16 +273,11 @@ nodeList[indexPath.section][indexPath.row].selectCell?()
 
 ```
 subList.append(TableNode(regularWithIcon: #imageLiteral(resourceName: "news"), title: "2018新闻", description: "点击查看更多"){ [weak self] in
-let pushedCtr = PushedCtr()
-pushedCtr.title = "2018新闻"
-self?.navigationController?.pushViewController(pushedCtr, animated: true)
+  let pushedCtr = PushedCtr()
+  pushedCtr.title = "2018新闻"
+  self?.navigationController?.pushViewController(pushedCtr, animated: true)
 })
 ```
 
 **除了添加新的Cell类型,后续匹配工作都可以忽略不管**
 
-
-
-完整实现的例子可以在github上查看:
-
-https://github.com/miku1958/ModularTable
