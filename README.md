@@ -120,6 +120,8 @@ self.navigationController?.pushViewController(pushedCtr, animated: true)
 
 **首先cellForRow中,设置cell的工作可以交给各自的cell处理,在获取cell后只要对cell设置model就行了**
 
+**但这样子的话cell和model的耦合就太高了,一般会再建一层viewModel来实现cell的设置, 由于不是重点这里就先不做**
+
 **接着model其实不用分那么多种,所有类型的数据都可以放在一起,不同的类型分开放在一起,后期需要改动也相对方便一些**
 
 ```
