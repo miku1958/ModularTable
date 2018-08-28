@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BlurCell: UITableViewCell ,TableNodeProtocol{
+class BlurCell: UITableViewCell{
 
 	@IBOutlet weak var titleLabel: UILabel!
 	
@@ -16,13 +16,11 @@ class BlurCell: UITableViewCell ,TableNodeProtocol{
 	
 	@IBOutlet weak var backgroundImageVIew: UIImageView!
 
-	var node: TableNode?{
-		didSet{
-			guard let node = node else { return }
-			titleLabel.text = node.title
-			iconImageView.image = node.icon
-			backgroundImageVIew.image = node.backgroundImage
-		}
+}
+struct BlurCellConfigurator {
+	static func config(cell:BlurCell ,TableNode node:TableNode ) -> () {
+		cell.titleLabel.text = node.title
+		cell.iconImageView.image = node.icon
+		cell.backgroundImageVIew.image = node.backgroundImage
 	}
-
 }

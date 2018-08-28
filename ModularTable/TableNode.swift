@@ -9,13 +9,19 @@
 import UIKit
 
 struct TableNode {
-	var type:Int
+	enum NodeType:Int {
+		case regular
+		case range
+		case description
+		case web
+	}
+	var type:NodeType
 	var icon:UIImage?
 	var title:String = ""
 	var desc:String = ""
 	var selectCell:(()->())?
 	init(regularWithIcon icon:UIImage?, title:String , description:String,selectCell:@escaping ()->()) {
-		self.type = 0
+		self.type = .regular
 		self.icon = icon
 		self.title = title
 		self.desc = description
@@ -25,7 +31,7 @@ struct TableNode {
 	var max:Double = 0
 	var current:Double = 0
 	init(rangeWithTitle title:String , min:Double , max:Double,current:Double,selectCell:@escaping ()->()) {
-		self.type = 1
+		self.type = .range
 		self.title = title
 		self.min = min
 		self.max = max
@@ -34,20 +40,17 @@ struct TableNode {
 	}
 
 	init(description:String,selectCell:@escaping ()->()) {
-		self.type = 2
+		self.type = .description
 		self.desc = description
 		self.selectCell = selectCell
 	}
 
 	var backgroundImage:UIImage?
 	init(webWithTitle title:String , backgroundImage:UIImage , icon:UIImage,selectCell:@escaping ()->()) {
-		self.type = 3
+		self.type = .web
 		self.title = title
 		self.backgroundImage = backgroundImage
 		self.icon = icon
 		self.selectCell = selectCell
 	}
-}
-protocol TableNodeProtocol {
-	var node:TableNode?{get set}
 }

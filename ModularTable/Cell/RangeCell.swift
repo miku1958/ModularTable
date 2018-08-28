@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RangeCell: UITableViewCell ,TableNodeProtocol{
+class RangeCell: UITableViewCell{
 
 	@IBOutlet weak var titleLabel: UILabel!
 	
@@ -16,15 +16,16 @@ class RangeCell: UITableViewCell ,TableNodeProtocol{
 	@IBOutlet weak var maxLabel: UILabel!
 	@IBOutlet weak var sliderView: UISlider!
 
-	var node: TableNode? {
-		didSet{
-			guard let node = node else { return }
-			titleLabel.text = node.title
-			maxLabel.text = "\(node.max)"
-			minLabel.text = "\(node.min)"
-			sliderView.maximumValue = Float(node.max)
-			sliderView.minimumValue = Float(node.min)
-			sliderView.value = Float(node.current)
-		}
+
+}
+
+struct RangeCellConfigurator {
+	static func config(cell:RangeCell ,TableNode node:TableNode ) -> () {
+		cell.titleLabel.text = node.title
+		cell.maxLabel.text = "\(node.max)"
+		cell.minLabel.text = "\(node.min)"
+		cell.sliderView.maximumValue = Float(node.max)
+		cell.sliderView.minimumValue = Float(node.min)
+		cell.sliderView.value = Float(node.current)
 	}
 }

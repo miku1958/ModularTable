@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegularCell: UITableViewCell ,TableNodeProtocol{
+class RegularCell: UITableViewCell{
 
 	@IBOutlet weak var titleLabel: UILabel!
 
@@ -16,12 +16,14 @@ class RegularCell: UITableViewCell ,TableNodeProtocol{
 
 	@IBOutlet weak var iconImageView: UIImageView!
 
-	var node: TableNode? {
-		didSet{
-			guard let node = node else { return }
-			titleLabel.text = node.title
-			descriptionLabel.text = node.desc
-			iconImageView.image = node.icon
-		}
+
+}
+
+
+struct RegularCellConfigurator {
+	static func config(cell:RegularCell ,TableNode node:TableNode ) -> () {
+		cell.titleLabel.text = node.title
+		cell.descriptionLabel.text = node.desc
+		cell.iconImageView.image = node.icon
 	}
 }

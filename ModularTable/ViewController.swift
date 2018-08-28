@@ -75,12 +75,22 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource{
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let node = nodeList[indexPath.section][indexPath.row]
-		var cell = tableView.dequeueReusableCell(withIdentifier: "\(node.type)") as? (UITableViewCell & TableNodeProtocol)
+		var cell = tableView.dequeueReusableCell(withIdentifier: "\(node.type.rawValue)")
 		if cell == nil {
-			cell = Bundle.main.loadNibNamed("TableCell", owner: nil, options: nil)?[node.type] as? (UITableViewCell & TableNodeProtocol)
+			cell = Bundle.main.loadNibNamed("TableCell", owner: nil, options: nil)?[node.type.rawValue] as? UITableViewCell
 		}
-		cell?.node = node
-
+		if let cell = cell as? RegularCell{
+			RegularCellConfigurator.config(cell: cell, TableNode: node)
+		}
+		if let cell = cell as? RangeCell{
+			RangeCellConfigurator.config(cell: cell, TableNode: node)
+		}
+		if let cell = cell as? BlurCell{
+			BlurCellConfigurator.config(cell: cell, TableNode: node)
+		}
+		if let cell = cell as? DescriptionCell{
+			DescriptionCellConfigurator.config(cell: cell, TableNode: node)
+		}
 		return cell!;
 	}
 

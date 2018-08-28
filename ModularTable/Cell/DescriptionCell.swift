@@ -8,15 +8,12 @@
 
 import UIKit
 
-class DescriptionCell: UITableViewCell ,TableNodeProtocol{
+class DescriptionCell: UITableViewCell{
 
 	@IBOutlet weak var descriptionLabel: UILabel!
-	
-	var node: TableNode? {
-		didSet{
-			guard let node = node else { return }
-			descriptionLabel.text = node.desc
-		}
+}
+struct DescriptionCellConfigurator {
+	static func config(cell:DescriptionCell ,TableNode node:TableNode ) -> () {
+		cell.descriptionLabel.text = node.desc
 	}
-
 }
